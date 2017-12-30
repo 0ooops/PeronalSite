@@ -1,0 +1,35 @@
+{% load staticfiles %}
+<html>
+    <head>
+        <title>Fibby's Personal Site</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">        
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>        
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        <link href="//fonts.googleapis.com/css?family=Lobster&subset=latin,latin-ext" rel="stylesheet" type="text/css">    
+        <link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">    
+        <link rel="stylesheet" href="{% static 'css/base.css' %}">
+    </head>
+    <body>
+        <nav class="navbar fixed-top navbar-light row base-header_bkg_color">
+            <a class="navbar-brand col-md-2 base-header_logo_font" href="#">Fibby</a>               
+            <a class="navbar-brand col-md-1" href="#"></a>                     
+            <a class="navbar-brand col-md-2 base-header_font" href="#">Technical blog</a>                     
+            <a class="navbar-brand col-md-2 base-header_font" href="#">Time management</a>              
+            <div class="dropdown col-md-2">
+                <div class="dropdown-toggle base-header_font" type="button" data-toggle="dropdown">Previous Projects
+                    <span class="caret"></span>
+                </div>
+                <ul class="dropdown-menu">
+                    <li><a href="#">Web Dev</a></li>
+                    <li><a href="#">Machine Learning</a></li>
+                </ul>
+            </div>             
+            <a class="navbar-brand col-md-2 base-header_font" href="#">Contact me</a>                          
+        </nav>
+        <div class="container">
+            {% block content %}
+            {% endblock %}
+        </div>
+    </body>
+</html>

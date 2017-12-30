@@ -1,0 +1,45 @@
+.base-header_bkg_color {
+    background-color: #e3f2fd;
+}
+
+.base-header_logo_font {
+    font-family: 'Lobster';
+    font-size: 35px;
+    padding-left: 7%;
+    color: #ba7be5;
+}
+
+.base-header_logo_font:hover {
+    color: #d0a6ed;
+}
+
+.base-header_font {
+    font-size: 15px;
+    font-weight: bold;
+}
+
+.dropdown {
+    color: #337ab7;
+    padding-top: 15px;
+}
+
+.dropdown:hover {
+    color: #23527c;
+}
+
+.dropdown-menu {
+    background-color: #e3f2fd;
+}
+
+.dropdown-menu>li>a {
+    color: #337ab7;
+}
+
+.dropdown-menu>li>a:focus, .dropdown-menu>li>a:hover {
+    color: #23527c;
+    background-color: #edf5fc;
+}
+
+.container {
+    font-family: 'Ubuntu', sans-serif;
+}
