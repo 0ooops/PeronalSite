@@ -1,9 +1,9 @@
-{% extends 'timeManagement/base.html' %}
+{% extends 'mySite/base.html' %}
 
 {% block content %}
     {% for item in items %}
         <div class="col-md-4">
-            <h1><a href="">{{ item.title }}</a></h1>
+            <h3><a href="">{{ item.title }}</a></h3>
             <p>{{ item.description|linebreaksbr }}</p>
             <p>Estimated Hours: {{ item.estimated_hour }}</p>                        
             <p>Completed Hours: {{ item.spent_hour }}</p>                                    
