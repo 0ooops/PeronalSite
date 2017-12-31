@@ -1,0 +1,21 @@
+{% extends 'mysite/base.html' %}
+
+{% block content %}
+<h3 class="today_items_new-title">Edit Task</h3>
+<form method="POST">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="save btn btn-default today_items_new-submit">Save Change</button>
+</form>
+<script>
+    var total_hour = parseFloat($('#id_remained_hour').val()) + parseFloat($('#id_completed_hour').val());
+    console.log(total_hour);
+    $('#id_completed_hour').on('change', function() {
+        if (total_hour < $(this).val()) {
+            $('#id_remained_hour').val(0);
+        } else {
+            $('#id_remained_hour').val(total_hour - $(this).val());
+        }
+    });
+</script>
+{% endblock %}

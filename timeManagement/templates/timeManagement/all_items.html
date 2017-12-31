@@ -1,14 +1,38 @@
 {% extends 'mysite/base.html' %}
 
 {% block content %}
-    {% for item in items %}
-        <div class="col-md-4">
-            <h3><a href="">{{ item.title }}</a></h3>
-            <p>{{ item.description|linebreaksbr }}</p>
-            <p>Estimated Hours: {{ item.estimated_hour }}</p>                        
-            <p>Completed Hours: {{ item.spent_hour }}</p>                                    
-            <p>Completed Percentage: {{ item.percentage }}</p>                        
-            <p>created: {{ item.created_date }}</p>            
+    <div class="row">
+        <div class="col-md-12 all_items-summary">
+            <h3 class="text-center all_items-title">
+                Time Summary
+                <a href="{% url 'all_items_new' %}" class="today_items-add"><span class="glyphicon glyphicon-plus"></span></a>                                
+            </h3>
         </div>
-    {% endfor %}  
+    </div>
+    <br />
+    <div class="row">
+        {% for item in items %}
+            <div class="col-md-4 all_items-border">
+                <div class="all_items-title">{{ item.title }}
+                    <a href="{% url 'all_items_edit' pk=item.pk %}" class="all_items-edit"><span class="glyphicon glyphicon-pencil"></span></a>                                                
+                </div>
+                <div>{{ item.description }}</div>
+                <div>Created at: {{ item.created_date }}</div><br />                        
+                <div class="row">
+                    <span class="all_items-left">
+                        Completed: {{ item.spent_hour }} hours
+                    </span>
+                    <span class="all_items-right">
+                        Total: {{ item.estimated_hour }} hours
+                    </span>         
+                </div>                                    
+                <div class="progress">
+                    <div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="{{ item.spent_hour }}" 
+                    aria-valuemin="0" aria-valuemax="{{ item.estimated_hour }}" style="width:{{ item.percentage }}" name="percentage">
+                        {{ item.percentage }}
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
 {% endblock %}

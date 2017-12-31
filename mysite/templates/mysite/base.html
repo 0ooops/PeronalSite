@@ -1,14 +1,23 @@
+<!DOCTYPE html>
+
 {% load staticfiles %}
-<html>
+
+<html lang="en">
     <head>
         <title>Fibby's Personal Site</title>
+        <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">        
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>        
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        <script src="{% static 'js/c3.min.js' %}"></script>
+        <script src="{% static 'js/d3.v3.min.js' %}"></script>        
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">                
         <link href="//fonts.googleapis.com/css?family=Lobster&subset=latin,latin-ext" rel="stylesheet" type="text/css">    
         <link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">    
         <link rel="stylesheet" href="{% static 'css/base.css' %}">
+        <link rel="stylesheet" href="{% static 'css/all_items.css' %}">      
+        <link rel="stylesheet" href="{% static 'css/today_items.css' %}">        
+        <link rel="stylesheet" href="{% static 'css/c3.css' %}">                
     </head>
     <body>
         <nav class="navbar fixed-top navbar-light row base-header_bkg_color">

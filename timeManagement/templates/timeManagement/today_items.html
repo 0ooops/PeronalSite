@@ -2,19 +2,100 @@
 
 {% block content %}
 <div class="row">
-    <div class="col-md-4 text-center">
-        <h4>Today's Summary</h4>            
-
+    <div class="col-md-4 today_items-block">
+        <h4 class="today_items-title">Today's Summary</h4>
+        <div class="row">
+            <div id="today-chart"></div>                      
+        </div>
     </div>
-    <div class="col-md-4 text-center">
-        <h4>TODO</h4>
+    <div class="col-md-4 today_items-block">
+        <h4 class="today_items-title">TODO
+            <a href="{% url 'today_items_new' %}" class="today_items-add"><span class="glyphicon glyphicon-plus"></span></a>            
+        </h4>
+        <ol>                
         {% for item in today_items %}
-            <span>{{ item.time_item }}: </span>  
-            <span>{{ item.task_description }}</span>                  
+            {% if item.remained_hour > 0 %}
+            <li class="today_items-linespace">
+                <div><b>
+                    <span>&nbsp;&nbsp;{{ item.time_item }}: </span>  
+                    <span>{{ item.task_description }}</span></b>&nbsp;&nbsp;
+                    <a href="{% url 'today_items_edit' pk=item.pk %}"><span class="glyphicon glyphicon-pencil"></span></a>                        
+                </div>
+                <div>
+                    <span>&nbsp;&nbsp;remaining time: <em>{{ item.remained_hour }}</em></span> 
+                    <span>&nbsp;&nbsp;completed time: {{ item.completed_hour }}</span>                     
+                </div>
+                <!-- <div>
+                    <span>&nbsp;&nbsp;completed </span>
+                    <span><input class="form-control today_items-time_spent"/></span>              
+                    <span>hours</span>
+                    <span>
+                        <input type="submit" value="√" class="today_item-tick" />
+                    </span>
+                </div> -->
+            </li>      
+            {% endif %}            
         {% endfor %}  
+        </ol>    
+        <h4 class="today_items-title">DONE</h4>
+        <ul>                
+        {% for item in today_items %}
+            {% if item.remained_hour <= 0 %}
+            <li class="today_items-linespace">
+                <div>
+                    <span>&nbsp;&nbsp;{{ item.time_item }} - </span>  
+                    <span>{{ item.task_description }}: </span>
+                    <span><b><em>{{ item.completed_hour }}</em></b> hours</span>                                             
+                </div>
+            </li>      
+            {% endif %}            
+        {% endfor %}  
+        </ul>    
     </div>
-    <div class="col-md-4 text-center">
-        <h4>All Tasks Summary</h4>
+    <div class="col-md-4 today_items-block">
+        <h4 class="today_items-title">All Tasks Summary</h4>
+        {% for item in items %}
+        <div>
+            <div class="today_items-summary_title">{{ item.title }}</div>                     
+            <div class="row">
+                <span class="all_items-left">
+                    Completed: {{ item.spent_hour }} hours
+                </span>
+                <span class="all_items-right">
+                    Total: {{ item.estimated_hour }} hours
+                </span>         
+            </div>                                    
+            <div class="progress">
+                <div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="{{ item.spent_hour }}" 
+                aria-valuemin="0" aria-valuemax="{{ item.estimated_hour }}" style="width:{{ item.percentage }}" name="percentage">
+                    {{ item.percentage }}
+                </div>
+            </div>
+        </div>
+    {% endfor %}
     </div>    
 </div>
+<script type="text/javascript">
+
+    var chart_data = {{ chart|safe }};
+    var color_list = ['#ff7172', '#00afcc', '#95c122', '#bbd695', '#d4b9e5'];
+    var colors_json = {};
+
+    for (var i = 0; i < chart_data.length; i++) {
+        if (i < color_list.length) {
+            colors_json[chart_data[i][0]] = color_list[i];
+        } else {
+            colors_json[chart_data[i][0]] = color_list[i - color_list.length];
+        }
+    }
+
+    c3.generate({
+        bindto: '#today-chart',
+        data: {
+            columns: chart_data,
+            type : 'pie',
+            colors: colors_json
+        }
+    });
+</script>
 {% endblock %}

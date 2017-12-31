@@ -1,0 +1,10 @@
+{% extends 'mysite/base.html' %}
+
+{% block content %}
+<h3 class="today_items_new-title">New Monthly Task</h3>
+<form method="POST">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="save btn btn-default today_items_new-submit">Submit</button>
+</form>
+{% endblock %}

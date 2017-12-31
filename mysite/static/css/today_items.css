@@ -1,0 +1,65 @@
+.today_items-block {
+    height: 500px;
+    background-color: rgba(227, 242, 253, 0.5);
+    border: 2px solid white;
+}
+
+.today_items-title {
+    font-weight: bold;
+    color: #f48191;
+    margin-top: 10%;
+    margin-bottom: 5%;
+    text-align: center;
+}
+
+.today_items-time_spent {
+    width: 18%;
+    display: inline;
+    height: 23px;
+    font-size: 13px;
+}
+
+.today_items-linespace {
+    margin-top: 2%;
+}
+
+.today_item-tick {
+    background: transparent;
+    border: none;
+    outline: none;
+    font-weight: bold;
+    color: #f48191;
+}
+
+.today_item-tick:hover, .today_item-tick:focus, .today_item-tick:active {
+    color: #337AB5;
+}
+
+.today_items-add {
+    color: #f48191;
+    margin-left: 5px;
+    font-size: 16px;
+}
+
+.today_items-summary_title {
+    text-align: center;
+    margin-top: 1%;
+    font-family: 'Lobster';
+    font-weight: bold;
+}
+
+/** New Today Item */
+.today_items_new-title {
+    font-weight: bold;
+    margin-bottom: 4%;
+}
+
+.today_items_new-submit {
+    margin-top: 3%;
+}
+
+label {
+    width: 150px;
+    clear:left;
+    padding-right:10px;
+}
