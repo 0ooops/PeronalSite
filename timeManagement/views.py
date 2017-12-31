@@ -4,7 +4,6 @@ from datetime import datetime, timedelta, time
 from .forms import NewTimeSpentItemForm, EditTimeSpentItemForm, NewTimeItemForm, EditTimeItemForm
 from django.utils import timezone
 from django.contrib.auth.decorators import login_required
-import json
 
 
 today = datetime.now().date()
