@@ -26,7 +26,7 @@ SECRET_KEY = '&m(0vu!pp6qdxrylze=onb#daqw(^da%@)zztcy!lnrqlkjm(i'
 DEBUG = True
 
 ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'fibby.pythonanywhere.com']
-
+LOGIN_REDIRECT_URL = 'home'
 
 # Application definition
 

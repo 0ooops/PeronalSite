@@ -3,6 +3,7 @@ from .models import TimeItem, TimeSpentItem
 from datetime import datetime, timedelta, time
 from .forms import NewTimeSpentItemForm, EditTimeSpentItemForm, NewTimeItemForm, EditTimeItemForm
 from django.utils import timezone
+from django.contrib.auth.decorators import login_required
 import json
 
 
@@ -15,6 +16,7 @@ def all_items(request):
     items = TimeItem.objects.all().order_by('-percentage')
     return render(request, 'timeManagement/all_items.html', {'items': format_percentage(items)})
 
+@login_required(login_url='/login')
 def all_items_new(request):
     if request.method == "POST":
         form = NewTimeItemForm(request.POST)
@@ -28,6 +30,7 @@ def all_items_new(request):
         form = NewTimeItemForm()
     return render(request, 'timeManagement/all_items_new.html', {'form': form})
 
+@login_required(login_url='/login')
 def all_items_edit(request, pk):
     time_item = get_object_or_404(TimeItem, pk=pk)
     if request.method == "POST":
@@ -51,6 +54,7 @@ def today_items(request):
     today_items = TimeSpentItem.objects.filter(created_date__lte=today_end, created_date__gte=today_start).order_by('priority')
     return render(request, 'timeManagement/today_items.html', {'today_items': today_items, 'items': format_percentage(items), 'chart': format_chart(today_items)})
 
+@login_required(login_url='/login')
 def today_items_new(request):
     if request.method == "POST":
         form = NewTimeSpentItemForm(request.POST)
@@ -65,6 +69,7 @@ def today_items_new(request):
         form = NewTimeSpentItemForm()
     return render(request, 'timeManagement/today_items_new.html', {'form': form})
 
+@login_required(login_url='/login')
 def today_items_edit(request, pk):
     today_item = get_object_or_404(TimeSpentItem, pk=pk)
     if request.method == "POST":
