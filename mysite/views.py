@@ -4,7 +4,10 @@ from django.shortcuts import render, redirect
 
 
 def home(request):
-    return render(request, 'mysite/home.html')
+    current_user = "Visitor"
+    if request.user.is_authenticated:
+        current_user = request.user
+    return render(request, 'mysite/home.html', {'current_user': current_user})
 
 def signup(request):
     if request.method == 'POST':

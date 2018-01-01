@@ -21,10 +21,10 @@
     </head>
     <body>
         <nav class="navbar fixed-top navbar-light row base-header_bkg_color">
-            <a class="navbar-brand col-md-2 col-sm-6 base-header_logo_font" href="/">Fibby</a>               
-            <a class="navbar-brand col-md-1 col-sm-6" href="#"></a>                     
-            <a class="navbar-brand col-md-2 col-sm-6 base-header_font" href="#">Technical blog</a>                     
-            <div class="dropdown col-md-2 col-sm-6">
+            <a class="navbar-brand col-md-2 base-header_logo_font" href="/">Fibby</a>               
+            <a class="navbar-brand col-md-1" href="#"></a>                     
+            <a class="navbar-brand col-md-2 base-header_font" href="#">Technical blog</a>                     
+            <div class="dropdown col-md-2">
                 <div class="dropdown-toggle base-header_font" type="button" data-toggle="dropdown">Time management
                     <span class="caret"></span>
                 </div>
@@ -33,7 +33,7 @@
                     <li><a href="/time_management/today_items">Today's tasks</a></li>
                 </ul>
             </div>       
-            <div class="dropdown col-md-2 col-sm-6">
+            <div class="dropdown col-md-2">
                 <div class="dropdown-toggle base-header_font" type="button" data-toggle="dropdown">2018 Projects
                     <span class="caret"></span>
                 </div>
@@ -42,7 +42,8 @@
                     <li><a href="#">Machine Learning</a></li>
                 </ul>
             </div>             
-            <a class="navbar-brand col-md-2 col-sm-6 base-header_font" href="#">Contact me</a>                          
+            <a class="navbar-brand col-md-2 base-header_font" href="#">Contact me</a>       
+            <a class="navbar-brand col-md-1 base-header_font" href="{% url 'logout' %}"><em>{{ current_user }}</em></a>                   
         </nav>
         <div class="container">
             {% block content %}

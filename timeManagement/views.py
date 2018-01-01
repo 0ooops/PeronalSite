@@ -11,13 +11,20 @@ tomorrow = today + timedelta(1)
 today_start = datetime.combine(today, time())
 today_end = datetime.combine(tomorrow, time())
 
+
 @login_required(login_url='/login')
 def all_items(request):
+    current_user = "Visitor"
+    if request.user.is_authenticated:
+        current_user = request.user
     items = TimeItem.objects.filter(author=request.user).order_by('-percentage')
-    return render(request, 'timeManagement/all_items.html', {'items': format_percentage(items)})
+    return render(request, 'timeManagement/all_items.html', {'items': format_percentage(items), 'current_user': current_user})
 
 @login_required(login_url='/login')
 def all_items_new(request):
+    current_user = "Visitor"
+    if request.user.is_authenticated:
+        current_user = request.user
     if request.method == "POST":
         form = NewTimeItemForm(request.POST)
         if form.is_valid():
@@ -26,13 +33,16 @@ def all_items_new(request):
             time_item.created_date = timezone.now()
             time_item.save()
             items = TimeItem.objects.filter(author=request.user).order_by('-percentage')
-            return redirect('../all_items', {'items': format_percentage(items)})
+            return redirect('../all_items', {'items': format_percentage(items), 'current_user': current_user})
     else:
         form = NewTimeItemForm()
-    return render(request, 'timeManagement/all_items_new.html', {'form': form})
+    return render(request, 'timeManagement/all_items_new.html', {'form': form, 'current_user': current_user})
 
 @login_required(login_url='/login')
 def all_items_edit(request, pk):
+    current_user = "Visitor"
+    if request.user.is_authenticated:
+        current_user = request.user
     time_item = get_object_or_404(TimeItem, pk=pk)
     if request.method == "POST":
         form = EditTimeItemForm(request.POST, instance=time_item)
@@ -45,19 +55,26 @@ def all_items_edit(request, pk):
                 time_item.percentage = time_item.spent_hour / time_item.estimated_hour        
             time_item.save()
             items = TimeItem.objects.filter(author=request.user).order_by('-percentage')
-            return redirect('../../all_items', {'items': format_percentage(items)})
+            return redirect('../../all_items', {'items': format_percentage(items), 'current_user': current_user})
     else:
         form = EditTimeItemForm(instance=time_item)
-    return render(request, 'timeManagement/all_items_edit.html', {'form': form})
+    return render(request, 'timeManagement/all_items_edit.html', {'form': form, 'current_user': current_user})
 
 @login_required(login_url='/login')
 def today_items(request):
+    current_user = "Visitor"
+    if request.user.is_authenticated:
+        current_user = request.user
     items = TimeItem.objects.filter(author=request.user).order_by('-percentage')
     today_items = TimeSpentItem.objects.filter(created_date__lte=today_end, created_date__gte=today_start, author=request.user).order_by('priority')
-    return render(request, 'timeManagement/today_items.html', {'today_items': today_items, 'items': format_percentage(items), 'chart': format_chart(today_items)})
+    return render(request, 'timeManagement/today_items.html', 
+    {'today_items': today_items, 'items': format_percentage(items), 'chart': format_chart(today_items), 'current_user': current_user})
 
 @login_required(login_url='/login')
 def today_items_new(request):
+    current_user = "Visitor"
+    if request.user.is_authenticated:
+        current_user = request.user
     if request.method == "POST":
         form = NewTimeSpentItemForm(request.POST)
         if form.is_valid():
@@ -67,13 +84,16 @@ def today_items_new(request):
             time_spent_item.save()
             items = TimeItem.objects.filter(author=request.user).order_by('-percentage')
             today_items = TimeSpentItem.objects.filter(created_date__lte=today_end, created_date__gte=today_start, author=request.user).order_by('priority')
-            return redirect('../today_items', {'today_items': today_items, 'items': format_percentage(items)})
+            return redirect('../today_items', {'today_items': today_items, 'items': format_percentage(items), 'current_user': current_user})
     else:
         form = NewTimeSpentItemForm()
-    return render(request, 'timeManagement/today_items_new.html', {'form': form})
+    return render(request, 'timeManagement/today_items_new.html', {'form': form, 'current_user': current_user})
 
 @login_required(login_url='/login')
 def today_items_edit(request, pk):
+    current_user = "Visitor"
+    if request.user.is_authenticated:
+        current_user = request.user
     today_item = get_object_or_404(TimeSpentItem, pk=pk)
     if request.method == "POST":
         form = EditTimeSpentItemForm(request.POST, instance=today_item)
@@ -89,10 +109,10 @@ def today_items_edit(request, pk):
 
             items = TimeItem.objects.filter(author=request.user).order_by('-percentage')
             today_items = TimeSpentItem.objects.filter(created_date__lte=today_end, created_date__gte=today_start, author=request.user).order_by('priority')
-            return redirect('../../today_items', {'today_items': today_items, 'items': format_percentage(items)})
+            return redirect('../../today_items', {'today_items': today_items, 'items': format_percentage(items), 'current_user': current_user})
     else:
         form = EditTimeSpentItemForm(instance=today_item)
-    return render(request, 'timeManagement/today_items_edit.html', {'form': form})
+    return render(request, 'timeManagement/today_items_edit.html', {'form': form, 'current_user': current_user})
 
 def format_percentage(items):
     for item in items:
