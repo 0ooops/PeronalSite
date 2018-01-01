@@ -11,8 +11,9 @@ tomorrow = today + timedelta(1)
 today_start = datetime.combine(today, time())
 today_end = datetime.combine(tomorrow, time())
 
+@login_required(login_url='/login')
 def all_items(request):
-    items = TimeItem.objects.all().order_by('-percentage')
+    items = TimeItem.objects.filter(author=request.user).order_by('-percentage')
     return render(request, 'timeManagement/all_items.html', {'items': format_percentage(items)})
 
 @login_required(login_url='/login')
@@ -21,9 +22,10 @@ def all_items_new(request):
         form = NewTimeItemForm(request.POST)
         if form.is_valid():
             time_item = form.save(commit=False)
+            time_item.author = request.user
             time_item.created_date = timezone.now()
             time_item.save()
-            items = TimeItem.objects.all().order_by('-percentage')
+            items = TimeItem.objects.filter(author=request.user).order_by('-percentage')
             return redirect('../all_items', {'items': format_percentage(items)})
     else:
         form = NewTimeItemForm()
@@ -42,15 +44,16 @@ def all_items_edit(request, pk):
             else:
                 time_item.percentage = time_item.spent_hour / time_item.estimated_hour        
             time_item.save()
-            items = TimeItem.objects.all().order_by('-percentage')
+            items = TimeItem.objects.filter(author=request.user).order_by('-percentage')
             return redirect('../../all_items', {'items': format_percentage(items)})
     else:
         form = EditTimeItemForm(instance=time_item)
     return render(request, 'timeManagement/all_items_edit.html', {'form': form})
 
+@login_required(login_url='/login')
 def today_items(request):
-    items = TimeItem.objects.all().order_by('-percentage')
-    today_items = TimeSpentItem.objects.filter(created_date__lte=today_end, created_date__gte=today_start).order_by('priority')
+    items = TimeItem.objects.filter(author=request.user).order_by('-percentage')
+    today_items = TimeSpentItem.objects.filter(created_date__lte=today_end, created_date__gte=today_start, author=request.user).order_by('priority')
     return render(request, 'timeManagement/today_items.html', {'today_items': today_items, 'items': format_percentage(items), 'chart': format_chart(today_items)})
 
 @login_required(login_url='/login')
@@ -59,10 +62,11 @@ def today_items_new(request):
         form = NewTimeSpentItemForm(request.POST)
         if form.is_valid():
             time_spent_item = form.save(commit=False)
+            time_spent_item.author = request.user
             time_spent_item.created_date = timezone.now()
             time_spent_item.save()
-            items = TimeItem.objects.all().order_by('-percentage')
-            today_items = TimeSpentItem.objects.filter(created_date__lte=today_end, created_date__gte=today_start).order_by('priority')
+            items = TimeItem.objects.filter(author=request.user).order_by('-percentage')
+            today_items = TimeSpentItem.objects.filter(created_date__lte=today_end, created_date__gte=today_start, author=request.user).order_by('priority')
             return redirect('../today_items', {'today_items': today_items, 'items': format_percentage(items)})
     else:
         form = NewTimeSpentItemForm()
@@ -83,8 +87,8 @@ def today_items_edit(request, pk):
                 time_item = today_item.time_item
                 time_item.update(today_item.completed_hour)
 
-            items = TimeItem.objects.all().order_by('-percentage')
-            today_items = TimeSpentItem.objects.filter(created_date__lte=today_end, created_date__gte=today_start).order_by('priority')
+            items = TimeItem.objects.filter(author=request.user).order_by('-percentage')
+            today_items = TimeSpentItem.objects.filter(created_date__lte=today_end, created_date__gte=today_start, author=request.user).order_by('priority')
             return redirect('../../today_items', {'today_items': today_items, 'items': format_percentage(items)})
     else:
         form = EditTimeSpentItemForm(instance=today_item)

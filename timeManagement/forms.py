@@ -6,21 +6,21 @@ class NewTimeItemForm(forms.ModelForm):
 
     class Meta:
         model = TimeItem
-        fields = ('author', 'title', 'description', 'estimated_hour',)
+        fields = ('title', 'description', 'estimated_hour',)
 
 
 class EditTimeItemForm(forms.ModelForm):
 
     class Meta:
         model = TimeItem
-        fields = ('author', 'title', 'description', 'estimated_hour', 'is_complete', 'spent_hour', 'percentage',)
+        fields = ('title', 'description', 'estimated_hour', 'is_complete', 'spent_hour', 'percentage',)
 
 
 class NewTimeSpentItemForm(forms.ModelForm):
 
     class Meta:
         model = TimeSpentItem
-        fields = ('author', 'time_item', 'task_description', 'remained_hour', 'priority',)
+        fields = ('time_item', 'task_description', 'remained_hour', 'priority',)
 
 
 class EditTimeSpentItemForm(forms.ModelForm):

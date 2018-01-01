@@ -1,10 +1,58 @@
 {% extends 'mysite/base.html' %}
 
 {% block content %}
-  <h2>Sign up</h2>
-  <form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit"  class="btn btn-default">Sign up</button>
-  </form>
+<div class="signup-background">
+  <div class="signup-block">
+    <h2>Sign up</h2>
+    <form method="post">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <button type="submit"  class="btn btn-default">Sign up</button>
+      <a href="{% url 'login' %}"><button type="button" class="btn btn-default" style="margin-left: 20px;">
+        Log in
+      </button></a>
+    </form>
+  </div>
+</div>  
+<style>
+  .signup-background {
+    background: url('https://www.surfnetkids.com/resources/wp-content/uploads/2016/12/snow.jpg') no-repeat center center fixed; 
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+
+    /* Set rules to fill background */
+    min-height: 100%;
+    min-width: 1024px;
+    
+    /* Set up proportionate scaling */
+    width: 100%;
+    height: auto;
+    
+    /* Set up positioning */
+    position: fixed;
+    top: 50px;
+    left: 0;
+  }
+
+.signup-block {
+  padding-top: 5%;
+  padding-left: 5%;
+}
+
+.helptext {
+  font-size: 10px;
+  color: #337ab7;
+}
+
+ul {
+  display: none;
+}
+
+.errorlist {
+  color: red;
+  display: inline;
+}
+</style>
 {% endblock %}
