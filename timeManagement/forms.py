@@ -20,11 +20,11 @@ class NewTimeSpentItemForm(forms.ModelForm):
 
     class Meta:
         model = TimeSpentItem
-        fields = ('time_item', 'task_description', 'remained_hour', 'priority',)
+        fields = ('time_item', 'task_description', 'remained_hour', 'priority', 'created_date',)
 
 
 class EditTimeSpentItemForm(forms.ModelForm):
 
     class Meta:
         model = TimeSpentItem
-        fields = ('completed_hour', 'remained_hour', 'priority',)
+        fields = ('completed_hour', 'remained_hour', 'priority', 'created_date',)

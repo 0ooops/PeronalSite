@@ -12,7 +12,7 @@
         <h4 class="today_items-title">TODO
             <a href="{% url 'today_items_new' %}" class="today_items-add"><span class="glyphicon glyphicon-plus"></span></a>            
         </h4>
-        <ol>                
+        <ol style="min-height: 170px;">            
         {% for item in today_items %}
             {% if item.remained_hour > 0 %}
             <li class="today_items-linespace">
