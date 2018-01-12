@@ -65,7 +65,7 @@ def today_items(request):
     items = TimeItem.objects.filter(author=request.user).order_by('-percentage')
     today_items = TimeSpentItem.objects.filter(created_date__date=today, author=request.user).order_by('priority')
     return render(request, 'timeManagement/today_items.html', 
-    {'today_items': today_items, 'items': format_percentage(items), 'chart': format_chart(today_items), 'current_user': current_user})
+    {'today_items': today_items, 'items': format_percentage(items), 'chart': format_chart(today_items), 'current_user': current_user, 'today': today})
 
 @login_required(login_url='/login')
 def today_items_new(request):
