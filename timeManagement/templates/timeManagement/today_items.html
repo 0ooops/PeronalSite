@@ -4,7 +4,6 @@
 <div class="row">
     <div class="col-md-4 today_items-block">
         <h4 class="today_items-title">Today's Summary</h4>
-        <h5 class="today_items-title">{{ today }}</h5>
         <div class="row">
             <div id="today-chart"></div>                      
         </div>
@@ -20,7 +19,6 @@
                 <div><b>
                     <span>&nbsp;&nbsp;{{ item.time_item }}: </span>  
                     <span>{{ item.task_description }}</span></b>&nbsp;&nbsp;
-                    <span>{{ item.created_date }}</span>
                     <a href="{% url 'today_items_edit' pk=item.pk %}"><span class="glyphicon glyphicon-pencil"></span></a>                        
                 </div>
                 <div>
