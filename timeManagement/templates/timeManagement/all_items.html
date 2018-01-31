@@ -4,7 +4,7 @@
     <div class="row">
         <div class="col-md-12 all_items-summary">
             <h3 class="text-center all_items-title">
-                Time Summary
+                New Tasks
                 <a href="{% url 'all_items_new' %}" class="today_items-add"><span class="glyphicon glyphicon-plus"></span></a>                                
             </h3>
         </div>
@@ -12,6 +12,7 @@
     <br />
     <div class="row">
         {% for item in items %}
+            {% if item.is_complete == False and item.spent_hour <= 0 %}
             <div class="col-md-4 all_items-border">
                 <div class="all_items-title">{{ item.title }}
                     <a href="{% url 'all_items_edit' pk=item.pk %}" class="all_items-edit"><span class="glyphicon glyphicon-pencil"></span></a>                                                
@@ -33,6 +34,80 @@
                     </div>
                 </div>
             </div>
+            {% endif %}
+        {% endfor %}
+    </div>
+    <br />
+    <div class="row">
+        <div class="col-md-12 all_items-summary">
+            <h3 class="text-center all_items-title">
+                Ongoing Tasks
+                <a href="{% url 'all_items_new' %}" class="today_items-add"><span class="glyphicon glyphicon-plus"></span></a>                                
+            </h3>
+        </div>
+    </div>
+    <br />
+    <div class="row">
+        {% for item in items %}
+            {% if item.is_complete == False and item.spent_hour > 0 %}
+            <div class="col-md-4 all_items-border">
+                <div class="all_items-title">{{ item.title }}
+                    <a href="{% url 'all_items_edit' pk=item.pk %}" class="all_items-edit"><span class="glyphicon glyphicon-pencil"></span></a>                                                
+                </div>
+                <div>{{ item.description }}</div>
+                <div>Created at: {{ item.created_date }}</div><br />                        
+                <div class="row">
+                    <span class="all_items-left">
+                        Completed: {{ item.spent_hour }} hours
+                    </span>
+                    <span class="all_items-right">
+                        Total: {{ item.estimated_hour }} hours
+                    </span>         
+                </div>                                    
+                <div class="progress">
+                    <div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="{{ item.spent_hour }}" 
+                    aria-valuemin="0" aria-valuemax="{{ item.estimated_hour }}" style="width:{{ item.percentage }}" name="percentage">
+                        {{ item.percentage }}
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+        {% endfor %}
+    </div>
+    <br />
+    <div class="row">
+        <div class="col-md-12 all_items-summary">
+            <h3 class="text-center all_items-title">
+                Completed Tasks
+            </h3>
+        </div>
+    </div>
+    <br />
+    <div class="row">
+        {% for item in items %}
+            {% if item.is_complete == True %}
+            <div class="col-md-4 all_items-border">
+                <div class="all_items-title">{{ item.title }}
+                    <a href="{% url 'all_items_edit' pk=item.pk %}" class="all_items-edit"><span class="glyphicon glyphicon-pencil"></span></a>                                                
+                </div>
+                <div>{{ item.description }}</div>
+                <div>Created at: {{ item.created_date }}</div><br />                        
+                <div class="row">
+                    <span class="all_items-left">
+                        Completed: {{ item.spent_hour }} hours
+                    </span>
+                    <span class="all_items-right">
+                        Total: {{ item.estimated_hour }} hours
+                    </span>         
+                </div>                                    
+                <div class="progress">
+                    <div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="{{ item.spent_hour }}" 
+                    aria-valuemin="0" aria-valuemax="{{ item.estimated_hour }}" style="width:{{ item.percentage }}" name="percentage">
+                        {{ item.percentage }}
+                    </div>
+                </div>
+            </div>
+            {% endif %}
         {% endfor %}
     </div>
 {% endblock %}

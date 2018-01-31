@@ -21,6 +21,10 @@ class NewTimeSpentItemForm(forms.ModelForm):
     class Meta:
         model = TimeSpentItem
         fields = ('time_item', 'task_description', 'remained_hour', 'priority', 'created_date',)
+    
+    def __init__(self, user, *args, **kwargs):
+        super(NewTimeSpentItemForm, self).__init__(*args, **kwargs)
+        self.fields['time_item'].queryset = TimeItem.objects.filter(author=user, is_complete=False)
 
 
 class EditTimeSpentItemForm(forms.ModelForm):

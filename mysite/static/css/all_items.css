@@ -9,7 +9,7 @@
     font-size: 22px;
     color: #f48191;
     font-weight: bold;
-    padding-top: 5%;
+    padding-top: 1.5%;
     padding-bottom: 2%;
 }
 
@@ -27,7 +27,7 @@
 
 .all_items-summary {
     background-color: rgb(240, 230, 247);
-    height: 200px;
+    height: 100px;
     text-align: center;
 }
 

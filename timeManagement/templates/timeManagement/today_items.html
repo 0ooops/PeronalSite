@@ -33,14 +33,6 @@
                     <span>&nbsp;&nbsp;remaining time: <em>{{ item.remained_hour }}</em></span> 
                     <span>&nbsp;&nbsp;completed time: {{ item.completed_hour }}</span>                     
                 </div>
-                <!-- <div>
-                    <span>&nbsp;&nbsp;completed </span>
-                    <span><input class="form-control today_items-time_spent"/></span>              
-                    <span>hours</span>
-                    <span>
-                        <input type="submit" value="√" class="today_item-tick" />
-                    </span>
-                </div> -->
             </li>      
             {% endif %}            
         {% endfor %}  
@@ -83,8 +75,12 @@
     {% endfor %}
     </div>    
 </div>
+<br />
+<div class="row">
+    <div id="trend-chart">
+</div>
 <script type="text/javascript">
-
+    // pie chart
     var chart_data = {{ chart|safe }};
     var color_list = ['#ff7172', '#00afcc', '#95c122', '#bbd695', '#d4b9e5'];
     var colors_json = {};
@@ -103,6 +99,29 @@
             columns: chart_data,
             type : 'pie',
             colors: colors_json
+        }
+    });
+    // line chart
+    var trend = {{ trend|safe }}
+    var trend_date = trend[0];
+    var trend_data = trend[1];
+    c3.generate({
+        bindto: '#trend-chart',
+        data: {
+            x: 'x',
+            columns: [
+                trend_date,
+                trend_data
+            ]
+        },
+        axis: {
+            x: {
+                type: 'timeseries',
+                tick: {
+                    fit: true,
+                    format: '%Y-%m-%d'
+                }
+            }
         }
     });
 </script>
