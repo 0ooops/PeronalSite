@@ -71,7 +71,12 @@ def today_items(request):
         total_allocated += item.completed_hour + item.remained_hour
         total_completed += item.completed_hour
 
-    time_spent_items = TimeSpentItem.objects.filter(created_date__gt=datetime.today()-timedelta(days=14), author=request.user).values('created_date').annotate(sum=Sum('completed_hour')).order_by('created_date')
+    time_spent_items = TimeSpentItem.objects \
+        .extra(select = {'day':'date( created_date )'}) \
+        .values('day') \
+        .filter(created_date__gt=datetime.today()-timedelta(days=14), author=request.user) \
+        .annotate(sum=Sum('completed_hour')) \
+        .order_by('created_date')
     return render(request, 'timeManagement/today_items.html', 
     {'today_items': today_items, 'items': format_percentage(items), 'chart': format_chart(today_items), 
     'current_user': current_user, 'total_allocated': total_allocated, 'total_completed': total_completed,
@@ -136,7 +141,25 @@ def format_chart(today_items):
 def format_trend(date_items):
     date = ['x']
     sum = ['completed hours']
-    for item in date_items:
-        date.append(item['created_date'].strftime('%Y-%m-%d'))
-        sum.append(item['sum'])
+    prev_date = None
+    prev_count = 0
+    for i in range(len(date_items) - 1):
+        if date_items[i]['day'] != prev_date:
+            if prev_date != None:
+                date.append(prev_date)
+                sum.append(prev_count)
+            prev_date = date_items[i]['day']
+            prev_count = date_items[i]['sum']
+        else:
+            prev_count += date_items[i]['sum']
+    
+    date.append(prev_date)
+    if date_items[len(date_items) - 1]['day'] != prev_date:
+        date.append(prev_count)
+        prev_count = date_items[len(date_items) - 1]['sum']
+        prev_date = date_items[len(date_items) - 1]['day']
+        date.append(prev_date)
+    else:
+        prev_count += date_items[len(date_items) - 1]['sum']
+    sum.append(prev_count)
     return [date, sum]
