@@ -103,6 +103,7 @@
     });
     // line chart
     var trend = {{ trend|safe }}
+    console.log(trend);
     var trend_date = trend[0];
     var trend_data = trend[1];
     c3.generate({
