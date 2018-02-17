@@ -1,0 +1,20 @@
+{% extends 'mysite/base.html' %}
+
+{% block content %}
+    <div class ="row all_posts-blocks">
+        <div class="col-md-12">
+            <h2 class="all_posts-title">Technical blog</h2>
+        </div>
+    </div>
+    {% for post in posts %}
+        <div class="row all_posts-blocks">
+            <div class="col-md-12">
+                <span><a href="#" class="all_posts-post_title">{{ post.title }}</a></span>
+                <span class="all_posts-tag">{{ post.category }}</span>
+                <p><em>By {{ post.author }}</em> </p>
+                <p class="all_posts-text">{{ post.text }}</p>
+                <span class="all_posts-time">Published on {{ post.published_date }}</span>
+            </div>
+        </div>
+    {% endfor %}
+{% endblock %}

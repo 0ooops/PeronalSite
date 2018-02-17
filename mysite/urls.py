@@ -27,4 +27,5 @@ urlpatterns = [
     url(r'^logout/$', auth_views.logout, {'next_page': settings.LOGOUT_REDIRECT_URL}, name='logout'),
     url(r'^admin/', admin.site.urls),
     url(r'^time_management/', include('timeManagement.urls')),
+    url(r'^technical_blog/', include('technicalBlog.urls')),
 ]

@@ -1,0 +1,44 @@
+.all_posts-title {
+    color: #f48191;
+    font-weight: bold;
+    text-align: center;
+}
+
+.all_posts-blocks {
+    background-color: #e8eef7;
+    padding: 5px 20px 10px 20px;
+    border: 1px solid white;
+}
+
+.all_posts-post_title {
+    font-size: 30px;
+    font-weight: bold;
+    color: black;
+}
+
+.all_posts-post_title:hover {
+    text-decoration: none;
+    color: #f48191;
+}
+
+.all_posts-tag {
+    background-color: #1422a0;
+    color: white;
+    font-weight: bold;
+    padding: 2px 5px 2px 5px;
+    margin-left: 10px;
+    font-size: 12px;
+}
+
+.all_posts-time {
+    font-size: 10px;
+}
+
+.all_posts-text {
+    text-overflow: ellipsis;
+    // white-space: nowrap;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+}
