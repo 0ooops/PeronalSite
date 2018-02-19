@@ -1,0 +1,15 @@
+{% extends 'mysite/base.html' %}
+
+{% block content %}
+<div class="all_posts-blocks">
+    <h2 class="all_posts-title">Edit post</h2>
+</div>
+<form method="POST" class="post-form">{% csrf_token %}
+    <div class="all_posts-blocks">
+        {{ form.as_p }}
+    </div>
+    <div class="all_posts-blocks">
+        <button type="submit" class="save btn btn-default">Save</button>
+    </div>
+</form>
+{% endblock %}

@@ -36,7 +36,6 @@
 
 .all_posts-text {
     text-overflow: ellipsis;
-    // white-space: nowrap;
     overflow: hidden;
     display: -webkit-box;
     -webkit-line-clamp: 3;

@@ -1,0 +1,19 @@
+{% extends 'mysite/base.html' %}
+
+{% block content %}
+    <div class="row all_posts-blocks">
+        <span class="all_posts-tag" style="float:right;">{{ post.category }}</span>
+        <h2 class="all_posts-title">{{ post.title }}
+            <a href="{% url 'post_edit' pk=post.pk %}">
+                <i class="glyphicon glyphicon-pencil" style="color:#f48191;font-size:20px;"></i>
+            </a>
+        </h2>
+        <p class="all_posts-time text-center">{{ post.published_date }}</p>
+    </div>
+    <div class="row all_posts-blocks">
+        <p>{{ post.text|linebreaksbr }}</p>
+    </div>
+    <div class="row all_posts-blocks">
+        <p class="text-center"><em>By {{ post.author }}</em></p>
+    </div>
+{% endblock %}
