@@ -74,7 +74,7 @@ def today_items(request):
     time_spent_items = TimeSpentItem.objects \
         .extra(select = {'day':'date( created_date )'}) \
         .values('day') \
-        .filter(created_date__gt=datetime.today()-timedelta(days=14), author=request.user) \
+        .filter(author=request.user) \
         .annotate(sum=Sum('completed_hour')) \
         .order_by('created_date')
     return render(request, 'timeManagement/today_items.html', 
@@ -143,7 +143,8 @@ def format_trend(date_items):
     sum = ['completed hours']
     prev_date = None
     prev_count = 0
-    for i in range(len(date_items) - 1):
+    start = max(0, len(date_items) - 14)
+    for i in range(start, len(date_items) - 1):
         if date_items[i]['day'] != prev_date:
             if prev_date != None:
                 date.append(prev_date)
