@@ -141,6 +141,9 @@ def format_chart(today_items):
 def format_trend(date_items):
     date = ['x']
     sum = ['completed hours']
+    if (len(date_items) == 0):
+        return [date, sum]
+
     prev_date = None
     prev_count = 0
     start = max(0, len(date_items) - 14)

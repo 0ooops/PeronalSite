@@ -107,27 +107,31 @@
     var trend = {{ trend|safe }}
     var trend_date = trend[0];
     var trend_data = trend[1];
-    c3.generate({
-        bindto: '#trend-chart',
-        data: {
-            x: 'x',
-            columns: [
-                trend_date,
-                trend_data
-            ],
-            colors: {
-                'completed hours': '#f48191'
-            }
-        },
-        axis: {
-            x: {
-                type: 'timeseries',
-                tick: {
-                    fit: true,
-                    format: '%Y-%m-%d'
+    if (trend_data.length == 1) {
+        $('#trend-chart').append("<div class='text-center'>No data to display</div>");
+    } else {
+        c3.generate({
+            bindto: '#trend-chart',
+            data: {
+                x: 'x',
+                columns: [
+                    trend_date,
+                    trend_data
+                ],
+                colors: {
+                    'completed hours': '#f48191'
+                }
+            },
+            axis: {
+                x: {
+                    type: 'timeseries',
+                    tick: {
+                        fit: true,
+                        format: '%Y-%m-%d'
+                    }
                 }
             }
-        }
-    });
+        });
+    }
 </script>
 {% endblock %}
