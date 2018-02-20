@@ -22,3 +22,9 @@ def signup(request):
     else:
         form = UserCreationForm()
     return render(request, 'signup.html', {'form': form})
+
+def contact(request):
+    current_user = "Visitor"
+    if request.user.is_authenticated:
+        current_user = request.user
+    return render(request, 'mysite/contact.html', {'current_user': current_user})

@@ -20,6 +20,7 @@
         <link rel="stylesheet" href="{% static 'css/today_items.css' %}">        
         <link rel="stylesheet" href="{% static 'css/c3.css' %}">
         <link rel="stylesheet" href="{% static 'css/all_posts.css' %}">                                
+        <link rel="stylesheet" href="{% static 'css/contact.css' %}">                                
     </head>
     <body>
         <nav class="navbar fixed-top navbar-light row base-header_bkg_color">
@@ -44,7 +45,7 @@
                     <li><a href="#">Machine Learning</a></li>
                 </ul>
             </div>             
-            <a class="navbar-brand col-md-2 base-header_font" href="#">Contact me</a>       
+            <a class="navbar-brand col-md-2 base-header_font" href="{% url 'contact' %}">Contact me</a>       
             <a class="navbar-brand col-md-1 base-header_font" href="{% url 'logout' %}"><em>{{ current_user }}</em></a>                   
         </nav>
         <div class="container">
