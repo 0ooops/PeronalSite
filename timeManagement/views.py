@@ -134,7 +134,7 @@ def format_percentage(items):
 def format_chart(today_items):
     chart_data = []
     for today_item in today_items:
-        pair = [today_item.time_item.title + ': ' + today_item.description, today_item.completed_hour]
+        pair = [today_item.time_item.title + ': ' + today_item.task_description, today_item.completed_hour]
         chart_data.append(pair)
     return chart_data
 
