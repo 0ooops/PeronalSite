@@ -53,7 +53,7 @@ def all_items_edit(request, pk):
             else:
                 time_item.percentage = time_item.spent_hour / time_item.estimated_hour        
             time_item.save()
-            items = TimeItem.objects.filter(author=request.user).order_by('-percentage')
+            items = TimeItem.objects.filter(author=request.user, is_complete=False).order_by('-spent_hour')
             return redirect('../../all_items', {'items': format_percentage(items), 'current_user': current_user})
     else:
         form = EditTimeItemForm(instance=time_item)
@@ -64,7 +64,7 @@ def today_items(request):
     current_user = "Visitor"
     if request.user.is_authenticated:
         current_user = request.user
-    items = TimeItem.objects.filter(author=request.user, is_complete=False).order_by('-percentage')
+    items = TimeItem.objects.filter(author=request.user, is_complete=False).order_by('-spent_hour')
     today_items = TimeSpentItem.objects.filter(created_date__date=today, author=request.user).order_by('priority')
 
     total_allocated, total_completed = 0, 0
@@ -100,7 +100,7 @@ def today_items_new(request):
                 time_item = time_spent_item.time_item
                 time_item.update(time_spent_item.completed_hour)
             cache.clear()
-            items = TimeItem.objects.filter(author=request.user).order_by('-percentage')
+            items = TimeItem.objects.filter(author=request.user).order_by('-spent_hour')
             today_items = TimeSpentItem.objects.filter(created_date__date=today, author=request.user).order_by('priority')
             return redirect('../today_items', {'today_items': today_items, 'items': format_percentage(items), 'current_user': current_user})
     else:
@@ -125,7 +125,7 @@ def today_items_edit(request, pk):
                 time_item = today_item.time_item
                 time_item.update(today_item.completed_hour)
 
-            items = TimeItem.objects.filter(author=request.user).order_by('-percentage')
+            items = TimeItem.objects.filter(author=request.user, is_complete=False).order_by('-percentage')
             today_items = TimeSpentItem.objects.filter(created_date__date=today, author=request.user).order_by('priority')
             return redirect('../../today_items', {'today_items': today_items, 'items': format_percentage(items), 'current_user': current_user})
     else:
