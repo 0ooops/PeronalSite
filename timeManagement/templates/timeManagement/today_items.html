@@ -55,23 +55,25 @@
     <div class="col-md-4 today_items-block">
         <h4 class="today_items-title">All Tasks Summary</h4>
         {% for item in items %}
-        <div>
-            <div class="today_items-summary_title">{{ item.title }}</div>                     
-            <div class="row">
-                <span class="all_items-left">
-                    Completed: {{ item.spent_hour }} hours
-                </span>
-                <span class="all_items-right">
-                    Total: {{ item.estimated_hour }} hours
-                </span>         
-            </div>                                    
-            <div class="progress">
-                <div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="{{ item.spent_hour }}" 
-                aria-valuemin="0" aria-valuemax="{{ item.estimated_hour }}" style="width:{{ item.percentage }}" name="percentage">
-                    {{ item.percentage }}
+            {% if item.spent_hour > 0.0 %}
+            <div>
+                <div class="today_items-summary_title">{{ item.title }}</div>                     
+                <div class="row">
+                    <span class="all_items-left">
+                        Completed: {{ item.spent_hour }} hours
+                    </span>
+                    <span class="all_items-right">
+                        Total: {{ item.estimated_hour }} hours
+                    </span>         
+                </div>                                    
+                <div class="progress">
+                    <div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="{{ item.spent_hour }}" 
+                    aria-valuemin="0" aria-valuemax="{{ item.estimated_hour }}" style="width:{{ item.percentage }}" name="percentage">
+                        {{ item.percentage }}
+                    </div>
                 </div>
             </div>
-        </div>
+            {% endif %}
     {% endfor %}
     </div>    
 </div>

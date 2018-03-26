@@ -5,6 +5,7 @@ from .forms import NewTimeSpentItemForm, EditTimeSpentItemForm, NewTimeItemForm,
 from django.utils import timezone
 from django.contrib.auth.decorators import login_required
 from django.db.models import Sum
+from django.core.cache import cache
 
 
 today = datetime.now().date()
@@ -94,6 +95,11 @@ def today_items_new(request):
             time_spent_item = form.save(commit=False)
             time_spent_item.author = request.user
             time_spent_item.save()
+            # update the main item each time completed a daily item
+            if time_spent_item.remained_hour <= 0:
+                time_item = time_spent_item.time_item
+                time_item.update(time_spent_item.completed_hour)
+            cache.clear()
             items = TimeItem.objects.filter(author=request.user).order_by('-percentage')
             today_items = TimeSpentItem.objects.filter(created_date__date=today, author=request.user).order_by('priority')
             return redirect('../today_items', {'today_items': today_items, 'items': format_percentage(items), 'current_user': current_user})
@@ -146,7 +152,7 @@ def format_trend(date_items):
 
     prev_date = None
     prev_count = 0
-    start = max(0, len(date_items) - 14)
+    start = max(0, len(date_items) - 14*4)  # 14 days x average 3 items/day
     for i in range(start, len(date_items) - 1):
         if date_items[i]['day'] != prev_date:
             if prev_date != None:
